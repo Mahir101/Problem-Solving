@@ -1,0 +1,55 @@
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    struct Node{
+        int data=NULL;
+        Node* next=nullptr;
+    };
+    Node* Stack=nullptr;
+    int mn=INT_MAX;
+    
+    MinStack() {
+        
+    }
+    
+    
+    void push(int x) {
+        if(x < mn) 
+            mn=x;
+        if(Stack == nullptr){
+            Stack=new Node;
+            Stack->data=x;
+            return;
+        }
+        
+        Node* newNode=new Node;
+        newNode->data=x;
+        newNode->next=Stack;
+        Stack=newNode;     //just ulta linked list
+    }
+    
+    void pop() {
+        if(mn==Stack->data) {
+            if(Stack->next != nullptr) {
+                Node* temp = Stack->next;
+                mn = temp->data;
+                while(temp->next != nullptr) {
+                    temp = temp->next;
+                    mn = min(mn,temp->data);
+                }
+            }
+            else {
+                mn = INT_MAX;
+            }
+        }
+        Stack = Stack->next;
+    }
+    
+    int top() {
+        return Stack->data;
+    }
+    
+    int getMin() {
+        return mn;
+    }
+};

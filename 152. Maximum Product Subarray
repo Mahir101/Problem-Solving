@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int n = nums.size();
+        int mx_now=nums[0], mn_now=nums[0];
+        int mx_final=nums[0];
+        bool flag = false;
+        for(int i=1; i<n; i++) {
+            int temp = max({nums[i], nums[i]*mn_now, nums[i]*mx_now});   
+		    mn_now = min({nums[i], mx_now*nums[i], mn_now*nums[i]});
+		    mx_now = temp;
+		    mx_final = max(mx_final, mx_now); 
+        }
+        return mx_final;
+    }
+};
+
+

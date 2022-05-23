@@ -1,0 +1,28 @@
+class Solution {
+    
+    public List<String> findAllConcatenatedWordsInADict(String[] words) {
+        List<String> result = new ArrayList<>();
+        Set<String> st = new HashSet<>(Arrays.asList(words));
+        
+        for(String word: st) {
+            if(check_concat(word, st))
+                result.add(word);
+        }
+        
+        return result;
+    }
+    
+    public boolean check_concat(String word, Set<String> dict) {
+        for(int i=1; i<word.length(); i++) {
+            String left = word.substring(0,i); 
+            String right = word.substring(i);
+            if(dict.contains(left)) {
+                if(dict.contains(right) || check_concat(right, dict)) {
+                    return true;
+                }
+            }   
+        }
+        return false;
+    }
+    
+}

@@ -1,0 +1,22 @@
+class Solution {
+    int dp[] = new int[50];
+    public int climbStairs(int n) {
+       
+        for(int i=0; i<=n; i++) {
+            dp[i]=-1;
+        }
+        return recur(0,n);
+    }
+    
+    int recur(int i, int n) {
+        if(i==n) {
+            return 1;
+        }
+        if(i>n) {
+            return 0;
+        }
+        if(dp[i]!=-1) return dp[i];
+        return dp[i] = recur(i+1,n) + recur(i+2,n);
+            
+    }
+}

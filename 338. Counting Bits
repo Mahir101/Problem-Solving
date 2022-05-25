@@ -1,0 +1,13 @@
+class Solution {
+public:
+    vector<int> countBits(int n) {
+        
+        vector<int> vec(n+1);
+        for(int i = 1; i<=n; ++i)
+            vec[i] = vec[i/2] + i%2;
+        //bishoi ta holo jodi n hoi ekta number tahole n/2 e same bit othoba 1 beshi ache
+        // ar ei 1 ta beshi tokhn e hoi jokhn odd hoi
+        // ei type er problem gulo observation binary property odd even hacking, modular hacking etc.
+        return vec;
+    }
+};

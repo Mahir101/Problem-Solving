@@ -1,0 +1,17 @@
+class Solution {
+    public boolean hasAllCodes(String s, int k) {
+        int tot = 1<<k, ones = tot-1, hash = 0, sz = s.length(), cnt=0;
+        boolean[] isSet = new boolean[tot];
+        for(int i=0; i<sz; i++) {
+            hash = ((hash<<1) & ones) | (s.charAt(i)-'0');
+            if(i>=k-1 && !isSet[hash]) {
+                isSet[hash] = true;
+                cnt++;
+                if(tot==cnt) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}

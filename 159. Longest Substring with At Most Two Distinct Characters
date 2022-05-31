@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int lengthOfLongestSubstringTwoDistinct(string s) {
+        int n = s.size();
+        int hashSet[300] = {};
+        int i=0, j=1, cnt = 0, mx = 2;
+        hashSet[s[0]]++;
+        hashSet[s[1]]++;
+        if(n==1 || n==2) return n;
+        while(j<n) {
+            if(check(hashSet)<=2) {
+                ++j;
+                hashSet[s[j]]++;
+                
+            } else {
+                hashSet[s[i]]--;
+                ++i;
+               
+            }
+            mx = max(mx, j-i+1);
+        }
+        return mx-1;
+    }
+    
+    int check(int hashSet[]) {
+        int res=0;
+        for(int i=0; i<300; i++) {
+            if(hashSet[i]>0) {
+                res++;
+            }
+        }
+        return res;
+    }
+};
+

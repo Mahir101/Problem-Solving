@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool isOneEditDistance(string s, string t) {
+        int n = s.size();
+        int m = t.size();
+        if(abs(n-m)>1) 
+            return false;
+        int i=0,j=0;
+        while(i<n && j<m && s[i]==t[j])
+            i++,j++;
+        if(i==n && j==m) 
+            return false;
+        if(n>m) {
+            return s.substr(i+1)==t.substr(j);
+        } else if(n<m) {
+            return s.substr(i)==t.substr(j+1);
+        } else {
+            return s.substr(i+1)==t.substr(j+1);            
+        }
+        return false;
+    }
+};

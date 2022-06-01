@@ -1,0 +1,18 @@
+class Solution {
+    public int shortestDistance(String[] words, String word1, String word2) {
+        int n = words.length, mn = n;
+        int pos1 = -1, pos2 = -1;
+        for(int i = 0; i < n; i++) {
+            if(words[i].equals(word1)) {
+                pos1 = i;
+            } else if (words[i].equals(word2)) {
+                pos2 = i;
+            }
+
+            if (pos1 != -1 && pos2 != -1) {
+                mn = Math.min(mn, Math.abs(pos1 - pos2));
+            }
+        }
+        return mn;
+    }
+}

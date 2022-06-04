@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool validWordAbbreviation(string word, string abbr) {
+        if(abbr.size() > word.size()) return false;
+        string cur;
+        int tot = 0;
+        for(int i=0; i < abbr.size(); ++i) {
+            char c = abbr[i];
+            if(c >= '0' && c <= '9') {
+                cur += c;
+            } else {
+                if(cur.size()) {    
+                    if(cur[0] == '0') return false;
+                    tot+=stoi(cur);
+                    cur="";
+                    if(tot>=word.size()) return false;
+                }
+                if(abbr[i] != word[tot++]) return false;
+            }
+        }
+        
+        if(cur.size()) {
+            if(cur[0] == '0') return false;
+            tot+=stoi(cur);
+            cur="";
+            if(tot>word.size()) return false;
+        }
+
+        return word.size()==tot;
+    }
+};

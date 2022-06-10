@@ -1,7 +1,7 @@
 class FileSystem {
     class Dir {
-        HashMap<String, Dir> dirs = new HashMap<>();
-        HashMap<String, String> files = new HashMap<>();
+        TreeMap<String, Dir> dirs = new TreeMap<>();
+        TreeMap<String, String> files = new TreeMap<>();
     }
     Dir root;
     public FileSystem() {

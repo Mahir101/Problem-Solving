@@ -1,0 +1,88 @@
+//Simple implementation
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n = height.size();
+        if(n==0)
+            return 0;
+        int mx=0, pos=0;
+        for(int i=0; i<n; i++) {
+            if(height[i]>=mx) {
+                pos = i;
+                mx = height[i];
+            }
+        }
+        int le=0, ri=0;
+        int st=0, tot=0, cur=0;
+        for(int i=0; i<=pos; i++) {
+            if(height[i]>=cur) {
+                cur=height[i];
+                st=0;
+                le+=tot;
+                tot=0;
+            } else {
+                tot+=cur-height[i];
+            }
+        }
+        cur=0, tot=0, st=0;
+        for(int i=n-1; i>=pos; i--) {
+            if(height[i]>=cur) {
+                cur=height[i];
+                st=0;
+                ri+=tot;
+                tot=0;
+            } else {
+                tot+=cur-height[i];
+            }
+        }
+        
+        return le+ri;
+    }
+};
+
+//DP SOLUTION
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n = height.size();
+        if(n==0)
+            return 0;
+        int ans = 0;
+        vector<int> le(n), ri(n);
+        le[0] = height[0];
+        for(int i=1; i<n; i++) {
+            le[i]=max(le[i-1], height[i]);
+        }
+        ri[n-1] = height[n-1];
+        for (int i=n-2; i>=0; i--) {
+            ri[i] = max(ri[i+1], height[i]);
+        }
+        for(int i=1; i<n-1; i++) {
+            ans+=min(le[i], ri[i])-height[i];
+        }
+        return ans;
+    }
+};
+
+//stack solution (similar to first implementation by code is in one go) this is similar to bars problem too 
+class Solution {
+public:
+    int trap(vector<int>& height)
+    {
+        int ans = 0, cur = 0;
+        stack<int> st;
+        while (cur < height.size()) {
+            while (!st.empty() && height[cur] > height[st.top()]) {
+                int top = st.top();
+                st.pop();
+                if (st.empty())
+                    break;
+                int distance = cur - st.top()-1;
+                int bounded_height = min(height[cur], height[st.top()]) - height[top];
+                ans += distance * bounded_height;
+            }
+            st.push(cur++);
+        }
+        return ans;
+    }
+};

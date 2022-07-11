@@ -1,0 +1,66 @@
+public class Solution {
+    int total;
+    
+    public int findTargetSumWays(int[] nums, int target) {
+        total = Arrays.stream(nums).sum();
+        
+        int[][] cache = new int[nums.length][2*total+1];
+        for(int[] row : cache) {
+            Arrays.fill(row, Integer.MIN_VALUE);
+        }
+        return calculate(nums, 0, 0, target, cache);
+    }
+    
+    public int calculate(int[] nums, int idx, int sum, int target, int[][] cache) {
+        if(idx==nums.length) {
+            if (sum == target) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            if (cache[idx][sum + total] != Integer.MIN_VALUE) {
+                return cache[idx][sum + total];
+            }
+            int add = calculate(nums, idx+1, sum+nums[idx], target, cache);
+            int subtract = calculate(nums, idx+1, sum-nums[idx], target, cache);
+            cache[idx][sum+total] = add + subtract;
+            return cache[idx][sum+total];
+        }
+    }
+}
+
+
+
+
+
+class Solution {
+public:
+    int total = 0;
+
+    int findTargetSumWays(vector<int>& nums, int target) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        total = accumulate(nums.begin(), nums.end(), total);        
+        vector<vector<int>> cache(nums.size() , vector<int> (2*total+1, INT_MIN)); 
+        return calculate(nums, 0, 0, target, cache); 
+    }
+    
+    int calculate(vector<int> nums, int idx, int sum, int target,  vector<vector<int>> &cache) {
+        if(idx==nums.size()) {
+            if (sum == target) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            if (cache[idx][sum+total] != INT_MIN) {
+                return cache[idx][sum+total];
+            }
+            int add = calculate(nums, idx+1, sum+nums[idx], target, cache);
+            int subtract = calculate(nums, idx+1, sum-nums[idx], target, cache);
+            cache[idx][sum+total] = add + subtract;
+            return cache[idx][sum+total];
+        }
+    }
+};

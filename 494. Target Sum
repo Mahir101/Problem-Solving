@@ -64,3 +64,24 @@ public:
         }
     }
 };
+
+
+
+
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        dp = {}
+        def recur(i, sumd):
+            if i==len(nums):
+                if sumd==target:
+                    return 1
+                else:
+                    return 0
+            
+            if (i,sumd) in dp:
+                return dp[(i, sumd)]
+            
+            dp[(i, sumd)] = recur(i+1, sumd+nums[i])+recur(i+1, sumd-nums[i])
+            return dp[(i, sumd)]
+        
+        return recur(0, 0);

@@ -19,3 +19,33 @@ class Solution:
             return dp[i]
         
         return recur(0)
+
+
+class Solution {
+public:
+    int dp[366];
+    int choices[3] = {1,7,30};
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        for(int i=0; i<365; i++)
+            dp[i] = INT_MAX;
+        return recur(days, costs, 0);
+    }
+    
+    int recur(vector<int>& days, vector<int>& costs, int idx) {
+        if(idx==days.size()) {
+            return 0;
+        }
+        
+        if(dp[idx]!=INT_MAX)
+            return dp[idx];
+        
+        int j = idx;
+        for(int i=0; i<3; i++) {
+            while(j < days.size() && days[j] < days[idx] + choices[i])
+                j++;
+            dp[idx] = min(dp[idx], costs[i] + recur(days, costs, j) );
+        }
+        
+        return dp[idx];
+    }
+};

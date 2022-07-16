@@ -1,0 +1,23 @@
+class Solution:
+    def findShortestSubArray(self, nums: List[int]) -> int:
+        dict={}
+        start={}
+        end={}
+        for i in range(len(nums)):
+            if nums[i] not in dict:
+                start[nums[i]]=i
+                end[nums[i]]=i
+                dict[nums[i]]= 1
+            else:
+                dict[nums[i]]= dict[nums[i]]+1
+                end[nums[i]]=i
+        mx=0
+        num=0
+        ans=inf
+        for key,value in dict.items():
+            if value>=mx:
+                mx=value
+        for key,value in dict.items():
+            if mx==value:
+                ans=min(ans,end[key]-start[key]+1)
+        return ans

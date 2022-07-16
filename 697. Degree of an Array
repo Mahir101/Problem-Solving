@@ -1,0 +1,17 @@
+class Solution:
+    def findShortestSubArray(self, nums: List[int]) -> int:
+        mp, st, en = {}, {}, {}
+        for i in range(len(nums)):
+            if nums[i] not in mp:
+                st[nums[i]], en[nums[i]],  mp[nums[i]]  = i, i, 1
+            else:
+                mp[nums[i]] += 1
+                en[nums[i]] = i
+        mx, num, ans = 0, 0, inf
+        for key,value in mp.items():
+            if value>=mx:
+                mx = value
+        for key,value in mp.items():
+            if mx==value:
+                 ans = min(ans,en[key]-st[key]+1)
+        return ans

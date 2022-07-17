@@ -1,0 +1,42 @@
+class Solution {
+public:
+    static bool cmp(vector<int>& a,vector<int>& b) {
+        if(a[0]==b[0])  return a[1] > b[1];
+        return a[0] < b[0];
+    }
+    
+    int maxEnvelopes(vector<vector<int>>& envelopes) {
+        sort(envelopes.begin(),envelopes.end(),cmp);
+        vector<int> v;
+        for(auto i: envelopes) {
+            auto it = lower_bound(v.begin(), v.end(), i[1]);
+            if(it==v.end()) {
+                v.push_back(i[1]);
+            }
+            else {
+                *it = i[1]; 
+            }
+        }
+        return v.size();   
+    }
+};
+
+
+class Solution:
+    def maxEnvelopes(self, envelopes: List[List[int]]) -> int:
+        envelopes.sort(key=lambda x: (x[0], -x[1]))
+        
+        def findlis(nums):
+            dp = []
+            for i in range(len(nums)):
+                idx = bisect_left(dp, nums[i]) 
+                # put the element at such a position that the array is remain sorted
+                if idx == len(dp):
+                    dp.append(nums[i])
+                else:
+                    dp[idx] = nums[i]
+            
+            return len(dp)
+        
+        return findlis([i[1] for i in envelopes])
+        

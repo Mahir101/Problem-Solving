@@ -1,0 +1,26 @@
+class Solution:       
+    def minCost(self, costs: List[List[int]]) -> int:
+        def seek1() -> int:
+            if i==0: 
+                return 1 
+            else: 
+                return 0
+        def seek2() -> int:
+            if i==2: 
+                return 1 
+            else: 
+                return 2
+        if len(costs) == 0: 
+            return 0
+        for n in reversed(range(len(costs)-1)):
+            for i in range(0,3):
+                costs[n][i] += min(costs[n+1][seek1()], costs[n+1][seek2()])
+            
+        return min(costs[0])
+    
+    
+        
+    
+
+        
+

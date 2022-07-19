@@ -1,0 +1,24 @@
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        
+        N = len(nums)
+        
+        sec = 0
+        fir = nums[N-1]
+        for i in range(N-2, 0, -1):
+            cur = max(fir, sec+nums[i])
+            sec = fir
+            fir = cur
+            
+        old = fir;
+        
+        fir = nums[N-2]
+        sec = 0
+        for i in range(N-3, -1, -1):
+            cur = max(fir, sec+nums[i])
+            sec = fir
+            fir = cur
+            
+        return max(old,fir)

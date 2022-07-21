@@ -1,0 +1,23 @@
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        dp = {}
+        
+        def recur(i, j):         
+            if j == len(t):
+                return 1
+            
+            if i == len(s):
+                return 0
+   
+            if (i,j) in dp:
+                return dp[(i,j)]
+            
+            if s[i] == t[j]:
+                dp[(i,j)] = recur(i+1, j+1) + recur(i+1, j)
+            else:
+                dp[(i,j)] = recur(i+1, j)
+                
+            return dp[(i,j)]
+        
+        return recur(0, 0)
+    

@@ -1,0 +1,20 @@
+class Solution:
+    def minDays(self, n: int) -> int:
+        dp = {}
+        
+        def recur(n):
+            if n == 0:
+                return 0
+            if n == 1:
+                return 1
+            
+            if n in dp:
+                return dp[n]
+            
+            
+            two = 1 + (n%2) + recur(n//2)
+            three = 1 + (n%3) + recur(n//3)
+            
+            dp[n] = min(two, three)
+            
+            return dp[n]

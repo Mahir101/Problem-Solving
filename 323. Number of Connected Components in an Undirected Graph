@@ -3,8 +3,11 @@ class Solution:
         par = [i for i in range(n)]
         rank = [1] * n
         
+
+            
         def find(node):
             while node != par[node]:
+                node = par[par[node]]
                 node = par[node]
             return node
         

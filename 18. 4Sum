@@ -1,0 +1,44 @@
+# K SUM TECHNIQUE RECURSIVE
+# ei code ta te ami demonstrate korbo kivabe amar thinking process kaj kore
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        nums.sort() # first sort all the numbers, sort korle amra shubidha pabo monotonic array te binary search othoba two pointer use korar
+        res, quad = [], []  # era hoilo legendary arrays, eder chara kaj cholto na
+#era je globally hoiya thakbe ei je K sum er jonne eta xoss ekta jinish
+        
+        def KSum(k, start, target): #dekhen K sum 
+            
+            if k != 2: #jodi K er man 2 na hoi tahole eidi korba naile to usual two pointer method e jaiba 
+                for i in range(start, len(nums) - k + 1): # loop chalao start theke list_size - k + 1 porjonto (ek kothai shesh porjonto chalaiba but etodi number amar window te thakbe orthat list_size - k + 1  te gelei final pointer kintu thik e last ei thakbe so dont worry jodi ekebare last size porjonto chalaita index out of bound khaito ektu chinta koro)
+                    if start < i and nums[i - 1] == nums[i]: # jodi start i er cheye choto hoi ar duita value same hoi tahole eta niye ami ki korbo, etake dorkar ache? amar cheyese unique but unique na chele eta deowa jaito tobe optimization ekta technique o apply kora jai 
+                        continue
+                        
+                    quad.append(nums[i])   # as usual oi number ta quad e dhukabo
+                    KSum(k - 1, i + 1, target - nums[i]) # quad e dhukai stack er vetore dhukai dao ager function call ke
+                    #ei je KSUM er niche aisha stack theke function pop korbo oigular VALUES shoho ekhon oi values gular upore chalabo  TWO POINTER
+                    quad.pop()  # tar age quad theke pop koira nei oi number gulan oi pore abar use hoite pare
+                    
+                return
+
+            l, r = start, len(nums) - 1
+            while l < r:
+                if nums[l] + nums[r] < target:
+                    l += 1
+                elif nums[l] + nums[r] > target:
+                    r -= 1
+                else:
+                    res.append(quad + [nums[l], nums[r]])  # quad e 2 ta number chilo ektu kheyal kori
+#ekhan theke ashse aro 2 ta number
+                    l += 1
+                    while l < r and nums[l - 1] == nums[l]:
+                        l += 1
+
+        KSum(4, 0, target)
+        #proshno holo bhai quad e 2 ta number kivabe holo ?
+        # he he brother oi je base case ta kheyal koreso k!=2
+        # oi base case e to k er man jodi 2 hoiya jai tahole to ar recursion call hoito na 
+        # tar mane K=4 er jonne ar K=2 er jonne value neowa hoise
+        # oi je start<i oi jukti diye kintu value gula parse kora hoise
+        # i er value kintu baraiyai gesi ami kheyal korio 
+        # shobsheshe boli recursion ekta xoss ekta jinish ekebare makhon
+        return res

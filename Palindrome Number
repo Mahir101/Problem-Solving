@@ -2,31 +2,23 @@ class Solution {
 public:
     bool isPalindrome(int x) {
         if(x<0) return false;
-        if(x<=9) return true;
-        int cur = x;
-        int sz = log10(x)+1;
-        int st1=pow(1);
-        int st2 = pow(sz-1);
-        for(int i=0; i<sz/2; i++) {
-            int le = (x/st2) % 10;
-            st2/=10;
-            int ri = cur%10;
-            cur/=10;
-            if(le!=ri) {
+        if(x==0) return true;
+        int len = log10(x)+1;
+        if(len==1) return true;
+        int divLeft = (int)(pow(10,len-1)+0.0003);
+        int modRight = 10;
+        int i = 0;
+        int temp_x = x;
+        while(i<len/2){
+            int le = x/divLeft;
+            divLeft/=10;
+            int ri = temp_x%modRight;
+            temp_x/=10;
+            i++;
+            cout<<le<<" "<<ri<<endl;
+            if((le%10)!=ri) 
                 return false;
-            }
         }
         return true;
     }
-    
-    long long pow(int y) {
-        long long z = 1;
-        for(int i=0; i<y; i++) {
-            z*=10;
-        }
-        return z;
-    }
 };
-    
-    
-    

@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string s) {
+        map<string, char> mp;
+        map<char, string> char_map;
+        stringstream ss(s);
+        int sizeOfPattern = pattern.size();
+        vector<string> vs;
+        string str;
+        while(ss >> str) {
+            vs.push_back(str);
+        }
+        if(vs.size()!=sizeOfPattern) {
+            return false;
+        }
+        for(int i=0; i<sizeOfPattern; i++) {
+            if(char_map[pattern[i]].size()>0 && char_map[pattern[i]]!=vs[i]) {
+                return false;
+            }
+            if(!mp[vs[i]]) {
+                char_map[pattern[i]] = vs[i];
+                mp[vs[i]] = pattern[i];
+            } else {
+                if(mp[vs[i]]==pattern[i]) {
+                    continue;
+                } else {
+                    return false;
+                }
+                
+            }
+        }
+        return true;
+    }
+};
